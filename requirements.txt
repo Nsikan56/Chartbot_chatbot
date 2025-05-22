@@ -1,0 +1,16 @@
+# Core dependencies
+streamlit>=1.28.0
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Machine Learning
+transformers>=4.35.0
+torch>=2.0.0
+tensorflow>=2.13.0
+
+# Text processing
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.20.0
+
+# Optional: For better performance
+accelerate>=0.20.0
