@@ -23,6 +23,7 @@ An intelligent chatbot that answers questions about 63+ years of Billboard Hot 1
 
 </div>
 
+<div align="center">
 ## 📊 Dataset Insights
 
 | Metric | Value |
@@ -31,6 +32,8 @@ An intelligent chatbot that answers questions about 63+ years of Billboard Hot 1
 | Unique Songs | 45,000+ |
 | Unique Artists | 15,000+ |
 | Timespan | 1958-2021 |
+
+</div>
 
 **Data Source**: [Billboard Hot 100 Dataset](https://www.kaggle.com/datasets/dhruvildave/billboard-the-hot-100-songs) (Kaggle)
 
