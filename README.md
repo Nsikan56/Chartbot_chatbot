@@ -40,6 +40,8 @@ An intelligent chatbot that answers questions about 63+ years of Billboard Hot 1
 
 > Note: The original dataset has been cleaned and processed for this project. See [`Billboard_cleaning.py`](Billboard_cleaning.py) for preprocessing details.
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nsikan56-chartbot-chatbot-app-0mnjqu.streamlit.app)
+
 ## 🚀 Quick Start
 
 ```bash
