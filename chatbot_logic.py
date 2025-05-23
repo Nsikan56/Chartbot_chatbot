@@ -276,9 +276,9 @@ def respond_to_query(query: str) -> str:
         return f"⚠️ Something went wrong. Please try a different query. (Error: {str(e)})"
 
 def format_top_songs(songs: list, year: int, n: int) -> str:
-    """Format songs list into a user-friendly string with correct sequential numbering."""
+    """Format songs list into a structured, readable Markdown list."""
     if not songs:
-        return f"📭 No songs found for {year}. Try a year between 1958-2021."
+        return f"📭 No songs found for {year}. Try a year between 1958–2021."
     
     actual_count = len(songs)
     header = f"🎵 **Top {actual_count} Billboard Hot 100 songs of {year}:**\n\n"
@@ -290,16 +290,20 @@ def format_top_songs(songs: list, year: int, n: int) -> str:
         weeks = song.get('weeks-on-board', 'N/A')
         peak = song.get('peak-rank', 'N/A')
         
-        song_info = f"**{i+1}.** {title} by *{artist}*"
+        song_info = f"**{i+1}. {title}** by *{artist}*"
+        details = []
         if weeks != 'N/A':
-            song_info += f" ({weeks} weeks on chart"
-            if peak != 'N/A' and peak != (i + 1):
-                song_info += f", peaked at #{peak}"
-            song_info += ")"
+            details.append(f"• {weeks} weeks on chart")
+        if peak != 'N/A':
+            details.append(f"• Peaked at #{peak}")
+        
+        if details:
+            song_info += "\n   " + "\n   ".join(details)
         
         song_list.append(song_info)
     
-    return header + "\n".join(song_list)
+    return header + "\n\n".join(song_list)
+
 
 def format_decade_songs(songs: list, decade_start: int, n: int) -> str:
     """Format decade songs list."""
