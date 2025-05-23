@@ -306,29 +306,32 @@ def format_top_songs(songs: list, year: int, n: int) -> str:
 
 
 def format_decade_songs(songs: list, decade_start: int, n: int) -> str:
-    """Format decade songs list."""
+    """Format top songs from a decade in a structured Markdown list."""
     if not songs:
         return f"📭 No songs found for the {decade_start}s."
     
     actual_count = len(songs)
     decade_end = decade_start + 9
-    header = f"🎵 **Top {actual_count} Billboard Hot 100 songs of the {decade_start}s ({decade_start}-{decade_end}):**\n\n"
+    header = f"🎵 **Top {actual_count} Billboard Hot 100 songs of the {decade_start}s ({decade_start}–{decade_end}):**\n\n"
     
     song_list = []
     for i, song in enumerate(songs):
-        rank = song.get('rank', i+1)
         title = song.get('song', 'Unknown')
         artist = song.get('artist', 'Unknown Artist')
-        weeks = song.get('weeks-on-board', 'N/A')
         year = song.get('year', 'N/A')
+        weeks = song.get('weeks-on-board', 'N/A')
         
-        song_info = f"**{i+1}.** {title} by *{artist}* ({year})"
+        song_info = f"**{i+1}. {title}** by *{artist}* ({year})"
+        details = []
         if weeks != 'N/A':
-            song_info += f" - {weeks} weeks on chart"
+            details.append(f"• {weeks} weeks on chart")
+        
+        if details:
+            song_info += "\n   " + "\n   ".join(details)
         
         song_list.append(song_info)
     
-    return header + "\n".join(song_list)
+    return header + "\n\n".join(song_list)
 
 def find_similar_song(query_song: str, threshold: int = 70) -> str:
     """
