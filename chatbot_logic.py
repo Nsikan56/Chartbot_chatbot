@@ -276,7 +276,7 @@ def respond_to_query(query: str) -> str:
         return f"⚠️ Something went wrong. Please try a different query. (Error: {str(e)})"
 
 def format_top_songs(songs: list, year: int, n: int) -> str:
-    """Format songs list into a user-friendly string."""
+    """Format songs list into a user-friendly string with correct sequential numbering."""
     if not songs:
         return f"📭 No songs found for {year}. Try a year between 1958-2021."
     
@@ -285,16 +285,15 @@ def format_top_songs(songs: list, year: int, n: int) -> str:
     
     song_list = []
     for i, song in enumerate(songs):
-        rank = song.get('rank', i+1)
         title = song.get('song', 'Unknown')
         artist = song.get('artist', 'Unknown Artist')
         weeks = song.get('weeks-on-board', 'N/A')
         peak = song.get('peak-rank', 'N/A')
         
-        song_info = f"**{rank}.** {title} by *{artist}*"
+        song_info = f"**{i+1}.** {title} by *{artist}*"
         if weeks != 'N/A':
             song_info += f" ({weeks} weeks on chart"
-            if peak != 'N/A' and peak != rank:
+            if peak != 'N/A' and peak != (i + 1):
                 song_info += f", peaked at #{peak}"
             song_info += ")"
         
