@@ -185,6 +185,72 @@ st.markdown("""
         box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
     }
 
+    /* Make dataset info text darker */
+    .stAlert > div {
+        color: #1a1a1a !important;
+        font-weight: 600 !important;
+    }
+
+    /* Make text input label clearer */
+    .stTextInput > label {
+        color: #1a1a1a !important;
+        font-weight: 600 !important;
+        font-size: 16px !important;
+    }
+
+    /* Style success/output boxes with darker text */
+    .stSuccess > div {
+        color: #0d4f3c !important;
+        font-weight: 500 !important;
+        font-size: 15px !important;
+    }
+
+    /* Style chat history expander */
+    .streamlit-expanderHeader {
+        background: #f8f9fa !important;
+        color: #1a1a1a !important;
+        font-weight: 600 !important;
+        border-radius: 12px !important;
+        border: 1px solid #dee2e6 !important;
+    }
+
+    /* Chat history content styling */
+    .streamlit-expanderContent {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%) !important;
+        border-radius: 0 0 12px 12px !important;
+        padding: 1rem !important;
+        color: #155724 !important;
+    }
+
+    /* Chat history text styling */
+    .streamlit-expanderContent p, 
+    .streamlit-expanderContent div {
+        color: #155724 !important;
+        font-weight: 600 !important;
+    }
+
+    /* Make chat history text even darker */
+    .streamlit-expanderContent strong {
+        color: #0a3d1a !important;
+        font-weight: 700 !important;
+    }
+
+    /* Clear chat history button - make it white */
+    div.stButton > button[kind="primary"],
+    div.stButton > button:contains("Clear Chat History") {
+        background: white !important;
+        color: #1a1a1a !important;
+        border: 2px solid #f093fb !important;
+        font-weight: 600 !important;
+    }
+
+    div.stButton > button[kind="primary"]:hover,
+    div.stButton > button:contains("Clear Chat History"):hover {
+        background: #f093fb !important;
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
     .footer {
         text-align: center;
         color: #666;
