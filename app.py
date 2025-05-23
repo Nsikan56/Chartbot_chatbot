@@ -205,33 +205,57 @@ st.markdown("""
         font-size: 15px !important;
     }
 
-    /* Style chat history expander */
-    .streamlit-expanderHeader {
+    /* Style chat history expander header */
+    div[data-testid="stExpander"] > div > div > div {
         background: #f8f9fa !important;
         color: #1a1a1a !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         border-radius: 12px !important;
         border: 1px solid #dee2e6 !important;
     }
 
-    /* Chat history content styling */
-    .streamlit-expanderContent {
-        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%) !important;
+    /* Chat history expander content styling */
+    div[data-testid="stExpander"] > div > div:last-child {
+        background: #d1ecf1 !important;
         border-radius: 0 0 12px 12px !important;
         padding: 1rem !important;
-        color: #155724 !important;
     }
 
-    /* Chat history text styling */
-    .streamlit-expanderContent p, 
-    .streamlit-expanderContent div {
-        color: #155724 !important;
+    /* Chat history text styling - make all text dark */
+    div[data-testid="stExpander"] p,
+    div[data-testid="stExpander"] div {
+        color: #0c5460 !important;
         font-weight: 600 !important;
     }
 
-    /* Make chat history text even darker */
-    .streamlit-expanderContent strong {
-        color: #0a3d1a !important;
+    /* Make chat history markdown text even darker */
+    div[data-testid="stExpander"] strong {
+        color: #042429 !important;
+        font-weight: 700 !important;
+    }
+
+    /* Target the expander summary specifically */
+    .streamlit-expanderHeader {
+        background: #f8f9fa !important;
+        color: #1a1a1a !important;
+        font-weight: 700 !important;
+    }
+
+    /* Target expander content */
+    .streamlit-expanderContent {
+        background: #d1ecf1 !important;
+        color: #0c5460 !important;
+    }
+
+    /* Alternative selectors for chat history */
+    details[open] > div {
+        background: #d1ecf1 !important;
+        color: #0c5460 !important;
+    }
+
+    details summary {
+        background: #f8f9fa !important;
+        color: #1a1a1a !important;
         font-weight: 700 !important;
     }
 
