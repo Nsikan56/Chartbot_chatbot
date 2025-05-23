@@ -51,9 +51,14 @@ st.markdown("""
 
     .main-header {
         text-align: center;
-        color: #1f77b4;
+        background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         margin-bottom: 2rem;
         font-weight: bold;
+        font-size: 2.5rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .instructions {
