@@ -185,6 +185,64 @@ st.markdown("""
         box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
     }
 
+    /* Make dataset info text darker */
+    .stAlert > div {
+        color: #1a1a1a !important;
+        font-weight: 600 !important;
+    }
+
+    /* Make text input label clearer */
+    .stTextInput > label {
+        color: #1a1a1a !important;
+        font-weight: 600 !important;
+        font-size: 16px !important;
+    }
+
+    /* Style success/output boxes with darker text */
+    .stSuccess > div {
+        color: #0d4f3c !important;
+        font-weight: 500 !important;
+        font-size: 15px !important;
+    }
+
+    /* Style chat history expander */
+    .streamlit-expanderHeader {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+        color: white !important;
+        font-weight: 600 !important;
+        border-radius: 12px !important;
+    }
+
+    /* Chat history content styling */
+    .streamlit-expanderContent {
+        background: #f8f9fa !important;
+        border-radius: 0 0 12px 12px !important;
+        padding: 1rem !important;
+    }
+
+    /* Chat history text styling */
+    .streamlit-expanderContent p, 
+    .streamlit-expanderContent div {
+        color: #1a1a1a !important;
+        font-weight: 500 !important;
+    }
+
+    /* Clear chat history button - make it white */
+    div.stButton > button[kind="primary"],
+    div.stButton > button:contains("Clear Chat History") {
+        background: white !important;
+        color: #1a1a1a !important;
+        border: 2px solid #f093fb !important;
+        font-weight: 600 !important;
+    }
+
+    div.stButton > button[kind="primary"]:hover,
+    div.stButton > button:contains("Clear Chat History"):hover {
+        background: #f093fb !important;
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
     .footer {
         text-align: center;
         color: #666;
@@ -278,9 +336,11 @@ if st.session_state.chat_history:
 
 # Clear history button
 if st.session_state.chat_history:
-    if st.button("🗑️ Clear Chat History"):
-        st.session_state.chat_history = []
-        st.rerun()
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("🗑️ Clear Chat History", key="clear_history", help="Clear all chat history"):
+            st.session_state.chat_history = []
+            st.rerun()
 
 # Follow-up suggestions
 st.markdown("""
