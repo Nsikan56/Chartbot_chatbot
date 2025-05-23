@@ -10,6 +10,8 @@
 
 An intelligent chatbot that answers questions about 63+ years of Billboard Hot 100 history (1958-2021) using **FLAN-T5 transformer** for NLP and **hybrid parsing** for robust query understanding.
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nsikan56-chartbot-chatbot-app-0mnjqu.streamlit.app)
+
 ## ✨ Features
 
 <div align="center">
@@ -39,8 +41,6 @@ An intelligent chatbot that answers questions about 63+ years of Billboard Hot 1
 **Data Source**: [Billboard Hot 100 Dataset](https://www.kaggle.com/datasets/dhruvildave/billboard-the-hot-100-songs) (Kaggle)
 
 > Note: The original dataset has been cleaned and processed for this project. See [`Billboard_cleaning.py`](Billboard_cleaning.py) for preprocessing details.
-
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nsikan56-chartbot-chatbot-app-0mnjqu.streamlit.app)
 
 ## 🚀 Quick Start
 
