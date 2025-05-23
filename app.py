@@ -130,7 +130,7 @@ st.markdown("""
         opacity: 0.9;
     }
 
-    /* Suggestions box */
+     /* Suggestions box */
     .suggestions {
         margin-top: 1.5rem;
         padding: 1.5rem;
@@ -140,30 +140,30 @@ st.markdown("""
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
+    
     .suggestions:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
-
+    
     .suggestions h4 {
         color: white;
         margin-top: 0;
         margin-bottom: 1rem;
     }
-
+    
     .suggestions ul {
         margin-bottom: 0;
     }
-
+    
     .suggestions li {
         margin-bottom: 0.5rem;
     }
-
+    
     .suggestions strong {
         color: #fff;
     }
-
+    
     .suggestions em {
         color: #f0f0f0;
     }
@@ -192,36 +192,6 @@ st.markdown("""
         margin-top: 2rem;
         padding: 1rem;
         border-top: 1px solid #e0e0e0;
-    }
-
-    /* Improve st.info box style */
-    [data-testid="stMarkdownContainer"] > .element-container .stAlert {
-        background: #ffffffdd !important;
-        color: #1e3c72 !important;
-        border-left: 5px solid #1e3c72 !important;
-        font-weight: 500;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-radius: 10px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    /* Improve text input style */
-    input[type="text"] {
-        background: #ffffffcc;
-        border: 2px solid #2a5298;
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-        color: #1e3c72;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    input[type="text"]:focus {
-        border-color: #f093fb;
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(240, 147, 251, 0.3);
     }
 </style>
 """, unsafe_allow_html=True)
