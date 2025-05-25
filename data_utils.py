@@ -352,3 +352,33 @@ def find_songs_by_pattern(pattern: str, limit: int = 10) -> list[dict]:
     except Exception as e:
         print(f"Error finding songs by pattern '{pattern}': {e}")
         return []
+def get_top_song_by_artist_in_period(artist_name: str, start_year: int, end_year: int) -> dict:
+    """Returns the most popular song by an artist in a given time range (by best chart rank)."""
+    try:
+        artist_data = df[
+            (df['artist'].str.contains(artist_name, case=False, na=False)) &
+            (df['year'] >= start_year) & (df['year'] <= end_year)
+        ]
+
+        if artist_data.empty:
+            return {}
+
+        best_song = (
+            artist_data
+            .groupby(['song', 'artist'])
+            .agg({
+                'rank': 'min',
+                'peak-rank': 'min',
+                'weeks-on-board': 'max',
+                'year': 'first'
+            })
+            .reset_index()
+            .sort_values('rank')
+            .iloc[0]
+        )
+
+        return best_song.to_dict()
+
+    except Exception as e:
+        print(f"Error in get_top_song_by_artist_in_period: {e}")
+        return {}
