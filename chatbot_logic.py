@@ -1,6 +1,6 @@
 from flan_t5_parser import parse_query_with_flan
 from data_utils import (get_top_songs_by_year, get_song_matches_with_duration, 
-                       format_song_duration_results, validate_year_range)
+                       format_song_duration_results, validate_year_range, get_top_song_by_artist_in_period)
 from fuzzywuzzy import fuzz
 import re
 
@@ -22,7 +22,37 @@ def enhanced_query_parser(query: str) -> dict:
     query_lower = query.lower().strip()
     result = {}
     
-    # Pattern 1: Top N songs of specific year
+    # Pattern 1: Most popular song by artist in year or decade
+    artist_popularity_patterns = [
+        r"(?:what\s+was\s+)?(.+?)['’]s\s+(?:most|top|best)\s+(?:popular\s+)?(?:song|hit)\s+(?:in|from)\s+(\d{4})",
+        r"(?:what\s+was\s+)?(.+?)['’]s\s+(?:most|top|best)\s+(?:popular\s+)?(?:song|hit)\s+(?:in|from)\s+the\s+(\d{2})s",
+        r"(?:most|top|best)\s+(?:popular\s+)?(?:song|hit)\s+by\s+(.+?)\s+(?:in|from)\s+(\d{4})",
+        r"(?:most|top|best)\s+(?:popular\s+)?(?:song|hit)\s+by\s+(.+?)\s+(?:in|from)\s+the\s+(\d{2})s",
+        r"(.+?)\s+(?:most|top|best)\s+(?:popular\s+)?(?:song|hit)\s+(?:in|from)\s+(\d{4})",
+        r"(.+?)\s+(?:most|top|best)\s+(?:popular\s+)?(?:song|hit)\s+(?:in|from)\s+the\s+(\d{2})s"
+    ]
+
+    for pattern in artist_popularity_patterns:
+        match = re.search(pattern, query_lower)
+        if match:
+            artist_name = match.group(1).strip()
+            year_or_decade = match.group(2).strip()
+            if len(year_or_decade) == 4:
+                return {
+                    "intent": "artist_top_song_year",
+                    "artist": artist_name,
+                    "year": int(year_or_decade)
+                }
+            elif len(year_or_decade) == 2:
+                decade = int(year_or_decade)
+                year = 1900 + decade if decade >= 50 else 2000 + decade
+                return {
+                    "intent": "artist_top_song_decade",
+                    "artist": artist_name,
+                    "decade_start": year
+                }
+
+    # Pattern 2: Top N songs of specific year
     top_year_patterns = [
         r'top\s+(\d+)\s+songs?\s+(?:of|from|in)\s+(\d{4})',
         r'best\s+(\d+)\s+(?:songs?|hits?)\s+(?:of|from|in)\s+(\d{4})',
@@ -38,7 +68,7 @@ def enhanced_query_parser(query: str) -> dict:
             result["year"] = int(match.group(2))
             return result
     
-    # Pattern 2: Top songs without number (default to 10)
+    # Pattern 3: Top songs without number (default to 10)
     top_year_default_patterns = [
         r'top\s+songs?\s+(?:of|from|in)\s+(\d{4})',
         r'best\s+(?:songs?|hits?)\s+(?:of|from|in)\s+(\d{4})',
@@ -53,7 +83,7 @@ def enhanced_query_parser(query: str) -> dict:
             result["n"] = 10
             return result
     
-    # Pattern 3: Decade queries (80s, 90s, 2000s, etc.)
+    # Pattern 4: Decade queries (80s, 90s, 2000s, etc.)
     decade_patterns = [
         r'(?:top|best)\s+(?:songs?|hits?)\s+(?:of|from)\s+the\s+(\d{2})s',  # "top songs from the 80s"
         r'(?:top|best)\s+(?:songs?|hits?)\s+(?:of|from)\s+(\d{4})s',        # "top songs from 2000s"
@@ -79,7 +109,7 @@ def enhanced_query_parser(query: str) -> dict:
             result["n"] = 20  # Default more songs for decade queries
             return result
     
-    # Pattern 4: Song duration queries with artist - ENHANCED to parse artist names
+    # Pattern 5: Song duration queries with artist - ENHANCED to parse artist names
     duration_with_artist_patterns = [
         # "How long did [SONG] by [ARTIST] stay on the chart"
         r'how long (?:was|did) (.+?) by (.+?) (?:stay|on|chart|last)',
@@ -115,7 +145,7 @@ def enhanced_query_parser(query: str) -> dict:
                 result["artist"] = artist_name
                 return result
     
-    # Pattern 5: General song duration queries (without specific artist)
+    # Pattern 6: General song duration queries (without specific artist)
     duration_patterns = [
         r'how long (?:was|did) (.+?) (?:stay|on|chart|last)',
         r'how many weeks (?:was|did) (.+?) (?:on|stay|chart)',
@@ -144,7 +174,8 @@ def enhanced_query_parser(query: str) -> dict:
                 result["intent"] = "song_duration"
                 result["song"] = song_name
                 return result
-    
+
+
     return result
 
 def get_decade_songs(decade_start: int, n: int = 20) -> list:
@@ -264,7 +295,34 @@ def respond_to_query(query: str) -> str:
             print(f"🎵 DEBUG: Found {len(matches)} matches for '{song}'")
             
             return format_song_duration_results(matches, song)
-            
+
+        elif intent == "artist_top_song_year":
+            if not year or not artist:
+                return "🔍 Please specify both an artist and a year."
+            top_song = get_top_song_by_artist_in_period(artist, year, year)
+            if not top_song:
+                return f"❌ Could not find any chart data for {artist} in {year}."
+            return (
+                f"🎤 **{artist}**'s most popular song in {year} was:\n\n"
+                f"**{top_song['song']}**\n"
+                f"• Peaked at #{top_song['rank']}\n"
+                f"• {top_song['weeks-on-board']} weeks on the chart"
+            )
+
+        elif intent == "artist_top_song_decade":
+            if not decade_start or not artist:
+                return "🔍 Please specify both an artist and a decade."
+            end_year = decade_start + 9
+            top_song = get_top_song_by_artist_in_period(artist, decade_start, end_year)
+            if not top_song:
+                return f"❌ Could not find any chart data for {artist} in the {decade_start}s."
+            return (
+                f"🎤 **{artist}**'s most popular song in the {decade_start}s was:\n\n"
+                f"**{top_song['song']}** ({top_song['year']})\n"
+                f"• Peaked at #{top_song['rank']}\n"
+                f"• {top_song['weeks-on-board']} weeks on the chart"
+            )
+
         else:
             print(f"❌ DEBUG: Unknown intent '{intent}', showing help message")
             return get_help_message()
