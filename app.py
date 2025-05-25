@@ -348,7 +348,7 @@ except Exception as e:
     st.warning(f"⚠️ Could not load dataset statistics: {e}")
 
 # Chat input
-query = st.text_input("💬 Ask ChartBot something:", key="user_input")
+query = st.text_input("💬 Ask ChartBot something:", key="user_input", placeholder="Try: Drake's most popular song in 2015")
 
 # Generate response
 if query and query.strip():
@@ -393,7 +393,8 @@ st.markdown("""
 # Footer
 st.markdown("---")
 st.markdown("""
-<div class='footer'>
-    Built with ❤️ using Streamlit & FLAN-T5 | Data: Billboard Hot 100
+<div class='text-align: center; font-size: 0.85rem; color: gray;'>
+    © 2024 ChartBot — Built by <a href="https://www.linkedin.com/in/nsikanumoh" target="_blank">Nsikan Umoh </a> with❤️.<br>
+  Powered by Streamlit & FLAN-T5 · Data: Billboard Hot 100 (1958–2021)
 </div>
 """, unsafe_allow_html=True)
