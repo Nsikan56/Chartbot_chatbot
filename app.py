@@ -391,10 +391,21 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Footer
-st.markdown("---")
 st.markdown("""
-<div class='text-align: center; font-size: 0.85rem; color: gray;'>
-    © 2024 ChartBot — Built by <a href="https://www.linkedin.com/in/nsikanumoh" target="_blank">Nsikan Umoh </a> with❤️.<br>
-  Powered by Streamlit & FLAN-T5 · Data: Billboard Hot 100 (1958–2021)
+---  
+<div style='
+    text-align: center; 
+    font-size: 0.95rem; 
+    color: #334155; 
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.8); 
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-top: 2rem;
+'>
+  © 2024 <strong>ChartBot</strong> — Built by 
+  <a href="https://www.linkedin.com/in/nsikanumoh" target="_blank" style="color:#1d4ed8;"><strong>Nsikan Umoh</strong></a> 
+  with ❤️<br>
+  <span style="color:#475569;">Powered by Streamlit & FLAN-T5 · Data: Billboard Hot 100 (1958–2021)</span>
 </div>
 """, unsafe_allow_html=True)
